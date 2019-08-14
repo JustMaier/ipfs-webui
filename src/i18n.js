@@ -32,12 +32,12 @@ i18n
   .use(XHR)
   .use(LanguageDetector)
   .init({
-    ns: ['welcome', 'status', 'files', 'explore', 'peers', 'settings', 'notify'],
+    ns: ['app', 'welcome', 'status', 'files', 'explore', 'peers', 'settings', 'notify'],
     fallbackLng: {
       'zh-Hans': ['zh-CN', 'en'],
       'zh-Hant': ['zh-TW', 'en'],
-      'zh': ['zh-CN', 'en'],
-      'default': ['en']
+      zh: ['zh-CN', 'en'],
+      default: ['en']
     },
     debug: process.env.NODE_ENV !== 'production',
     backend: {
@@ -47,6 +47,7 @@ i18n
     // react i18next special options (optional)
     react: {
       wait: true,
+      useSuspense: false,
       bindI18n: 'languageChanged loaded',
       bindStore: 'added removed',
       nsMode: 'default'

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'redux-bundler-react'
-import { translate, Trans } from 'react-i18next'
+import { withTranslation, Trans } from 'react-i18next'
 import { Table, Column, AutoSizer, SortDirection } from 'react-virtualized'
 import CountryFlag from 'react-country-flag'
 import Cid from '../../components/cid/Cid'
@@ -10,6 +10,7 @@ import { sortByProperty } from '../../lib/sort'
 export class PeersTable extends React.Component {
   static propTypes = {
     peerLocationsForSwarm: PropTypes.array,
+    className: PropTypes.string,
     t: PropTypes.func.isRequired
   }
 
@@ -48,12 +49,12 @@ export class PeersTable extends React.Component {
     const style = { width: '60px' }
 
     return cellData
-      ? <span class='dib tr' style={style}>{cellData}</span>
+      ? <span className='dib tr' style={style}>{cellData}</span>
       : <span className='dib tr o-40' style={style}>-</span>
   }
 
   peerIdCellRenderer = ({ cellData }) => (
-    <Cid value={cellData} />
+    <Cid value={cellData} identicon />
   )
 
   notesCellRenderer = ({ cellData }) => {
@@ -66,7 +67,7 @@ export class PeersTable extends React.Component {
         i18nKey='viaRelay'
         defaults='via <0>{node}</0>'
         values={{ node: cellData.node }}
-        components={[<Cid value={cellData.node} />]} />
+        components={[<Cid value={cellData.node} identicon />]} />
     }
   }
 
@@ -79,14 +80,14 @@ export class PeersTable extends React.Component {
   }
 
   render () {
-    const { peerLocationsForSwarm, t } = this.props
+    const { className, peerLocationsForSwarm, t } = this.props
     const { sortBy, sortDirection } = this.state
 
     const sortedList = (peerLocationsForSwarm || []).sort(sortByProperty(sortBy === 'latency' ? 'rawLatency' : sortBy, sortDirection === SortDirection.ASC ? 1 : -1))
     const tableHeight = 400
 
     return (
-      <div className='bg-white-70 center' style={{ 'height': `${tableHeight}px`, maxWidth: 1764 }}>
+      <div className={`bg-white-70 center ${className}`} style={{ height: `${tableHeight}px`, maxWidth: 1764 }}>
         { peerLocationsForSwarm && <AutoSizer disableHeight>
           {({ width }) => (
             <Table
@@ -117,5 +118,5 @@ export class PeersTable extends React.Component {
 
 export default connect(
   'selectPeerLocationsForSwarm',
-  translate('peers')(PeersTable)
+  withTranslation('peers')(PeersTable)
 )
