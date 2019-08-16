@@ -45,9 +45,9 @@ export const SettingsPage = ({
       </div>
     </Box>
 
-    <Box className='mb3 pa4 joyride-settings-config'>
-      <Experiments t={t} />
+    <Experiments t={t} />
 
+    <Box className='mb3 pa4 joyride-settings-config'>
       <Title>{t('config')}</Title>
       <div className='flex pb3'>
         <div className='flex-auto'>
@@ -171,7 +171,7 @@ const SettingsInfo = ({ t, isIpfsConnected, isConfigBlocked, hasExternalChanges,
   }
   return (
     <p className='ma0 mr2 lh-copy charcoal f6'>
-      {t('ipfsConfigDescription')}
+      {t('ipfsConfigDescription')} <a href='https://github.com/ipfs/go-ipfs/blob/master/docs/config.md' rel='noopener noreferrer' target='_blank' className='link blue'>{t('ipfsConfigHelp')}</a>
     </p>
   )
 }
